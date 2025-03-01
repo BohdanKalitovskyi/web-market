@@ -8,12 +8,17 @@ body {
     padding: 0;
 }
 
+body{
+    color:white;
+    background-color: lightpink;
+}
+
 .container {
     display: flex;
-    width: 100%;
-    height: 140px;
-    background-color: #8291A5;
-    
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
 .logo{
@@ -21,7 +26,6 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 1000;
     font-size: 50px;
-    color: #78F5FA;
 }
 
 .inputproduct {
@@ -30,10 +34,8 @@ body {
     margin-top: 60px;
     margin-right: 50px;
     background-color: #FAE778;
-
     outline: 3px solid green;
     border: 1px solid #ccc;
-
     font-size: 20px;
     font-family: 'Poppins', sans-serif;
 }
@@ -57,4 +59,58 @@ body {
     transition: all 500ms ease;
     background-color: aqua;
     border-color: aqua;
+}
+
+
+.sidebar {
+    width: 25%;
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    height: 50vh;
+}
+
+.products {
+    width: 75%;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+
+
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination button:hover {
+    background: #0056b3;
 }

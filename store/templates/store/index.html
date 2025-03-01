@@ -5,6 +5,20 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Main page</h1>
-    <p>Main page</p>
+<div class="container">
+    <aside class="sidebar">
+        <h2>Фільтри</h2>
+        <!-- Тут будуть фільтри -->
+    </aside>
+    <main class="products">
+        <div class="product-grid">
+            <!-- Карточки товарів будуть тут -->
+        </div>
+        <div class="pagination">
+            <button class="prev" id="previous">← Previous</button>
+            <span class="page-num" id="page-number">1</span>
+            <button class="next" id="next">Next →</button>
+        </div>
+    </main>
+</div>
 {% endblock %}
