@@ -4,15 +4,29 @@
    Main page
 {% endblock %}
 
+
+{% block header %}
+<header class="container">
+    <span class="logo">LOGO</span>
+    <input class="inputproduct" type="text" placeholder="Enter the product" value="" maxlenght="80">
+    <div class="user-icon">
+        <i class="fa-solid fa-user"></i>
+    </div>
+    <div class="user-cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-count">0</span>
+    </div>
+</header>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <aside class="sidebar">
-        <h2>Фільтри</h2>
-        <!-- Тут будуть фільтри -->
+        <h2>Filters</h2>
     </aside>
     <main class="products">
         <div class="product-grid">
-            <!-- Карточки товарів будуть тут -->
+            
         </div>
         <div class="pagination">
             <button class="prev" id="previous">← Previous</button>
