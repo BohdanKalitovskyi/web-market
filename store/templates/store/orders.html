@@ -1,0 +1,38 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+
+{% block title %}
+   Orders page
+{% endblock %}
+
+
+{% block header %}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'store/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Your Orders</h1>
+<ul>
+    {% for order in orders %}
+        <li>
+            <p>Name: {{ order.name }}</p>
+            <p>Email: {{ order.email }}</p>
+            <p>Address: {{ order.address }}</p>
+            <p>Phone number: {{ order.phone }}</p>
+            <ul>
+                {% for item in order.cart %}
+                    <li>
+                        <img src="{{ item.image }}" alt="{{ item.title }}">
+                        <p>{{ item.title }}</p>
+                        <p>Price: ${{ item.price }}</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

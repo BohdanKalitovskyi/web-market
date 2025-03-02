@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const productContainer = document.querySelector('.product-grid');
-
+    const searchInput = document.getElementById('search');
     const cartIcon = document.querySelector('.user-cart');
     const cartCount = document.createElement('span');
     cartCount.classList.add('cart-count');
@@ -14,41 +14,52 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPage = 1;
     const productsPerPage = 15;
     let cart = [];
-    
+    let allProducts = [];
 
     function loadProducts(page) {
-        const start = (page - 1) * productsPerPage
+        const start = (page - 1) * productsPerPage;
         fetch(`https://dummyjson.com/products?skip=${start}&limit=${productsPerPage}`)
             .then(response => response.json())
             .then(data => {
-                productContainer.innerHTML = '';
-
-                data.products.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.innerHTML = `
-                        <button 
-                            class="add-to-cart" 
-                            data-id="${product.id}" 
-                            data-title="${product.title}" 
-                            data-price="${product.price}" 
-                            data-image="${product.images[0]}">
-                            Add to the cart
-                        </button>
-                        <img src="${product.images[0]}" alt="${product.title}">
-                        <h3>${product.title}</h3>
-                        <p>${product.price} $</p>
-                         `;
-                    productContainer.appendChild(productCard);
-                });
-
+                allProducts = data.products;
+                renderProducts(allProducts);
                 document.getElementById('page-number').innerText = page;
-
                 toggleButtons(page);
                 addCartButtons();
             })
             .catch(error => console.error('Error loading products:', error));
     }
+    
+    function renderProducts(products) {
+        productContainer.innerHTML = '';
+    
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+            productCard.innerHTML = `
+                <button 
+                    class="add-to-cart" 
+                    data-id="${product.id}" 
+                    data-title="${product.title}" 
+                    data-price="${product.price}" 
+                    data-image="${product.images[0]}">
+                    Add to the cart
+                </button>
+                <img src="${product.images[0]}" alt="${product.title}">
+                <h3>${product.title}</h3>
+                <p>${product.price} $</p>
+            `;
+            productContainer.appendChild(productCard);
+        });
+    }
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase(); // Отримуємо текст пошуку і перетворюємо його в малий регістр
+        const filteredProducts = allProducts.filter(product => 
+            product.title.toLowerCase().includes(searchTerm) // Фільтруємо продукти по заголовку
+        );
+        renderProducts(filteredProducts); // Відображаємо відфільтровані продукти
+    });
 
     function toggleButtons(page) {
         const prevButton = document.getElementById('previous');
@@ -151,6 +162,8 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.appendChild(cartSidebar);
 
+
+
     const closeCartBtn = cartSidebar.querySelector('.close-cart');
     const cartItemsContainer = cartSidebar.querySelector('.cart-items');
 
@@ -178,13 +191,18 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPage++;
         loadProducts(currentPage);
     });
-/* -------- */
+    /* -------- */
 
+    const checkoutBtn = document.querySelector('.checkout-btn');
 
-    
+    checkoutBtn.addEventListener('click', function() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('Pay button clicked');
+        window.location.href = '/payment/';
+    });
 
-
-
+ /*    ----------- */
+ 
 
 });
 

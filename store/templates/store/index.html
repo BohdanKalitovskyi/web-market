@@ -8,10 +8,12 @@
 {% block header %}
 <header class="container">
     <span class="logo">LOGO</span>
-    <input class="inputproduct" type="text" placeholder="Enter the product" value="" maxlenght="80">
+    <input class="inputproduct" type="text" id="search" placeholder="Enter the product" value="" maxlenght="80">
+    <a href="{% url 'orders' %}">
     <div class="user-icon">
         <i class="fa-solid fa-user"></i>
     </div>
+    </a>
     <div class="user-cart">
         <i class="fa-solid fa-cart-shopping"></i>
         <span class="cart-count">0</span>
