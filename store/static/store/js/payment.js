@@ -24,6 +24,48 @@ document.addEventListener('DOMContentLoaded', function() {
         orderForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
+            
+            // Validation checks
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const cardNumber = document.getElementById('card-number').value;
+
+            // Name validation
+            if (name.trim() === '') {
+                alert('Please enter your name.');
+                return;
+            }
+
+            // Email validation (basic check)
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Address validation
+            if (address.trim() === '') {
+                alert('Please enter your address.');
+                return;
+            }
+
+            // Phone validation (basic phone number check)
+            const phoneRegex = /^\+?\d{9,15}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+
+            // Card number validation (basic check for format)
+            const cardRegex = /^\d{4} \d{4} \d{4} \d{4}$/;
+            if (!cardRegex.test(cardNumber)) {
+                alert('Please enter a valid card number in the format: XXXX XXXX XXXX XXXX.');
+                return;
+            }
+
+
             // Prepare the order data
             const orderData = {
                 name: document.getElementById('name').value,

@@ -1,8 +1,11 @@
 h1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     font-size: 36px;
     color: #333;
     margin-bottom: 20px;
+    background-color: rgb(246, 127, 232);
 }
 
 ul {

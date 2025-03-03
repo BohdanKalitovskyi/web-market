@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch all products from API
     async function fetchAllProducts() {
         try {
-            const response = await fetch('https://dummyjson.com/products?limit=200&select=id,title,price,images');
+            const response = await fetch('https://dummyjson.com/products?limit=200&select=id,title,price,images,rating');
             const data = await response.json();
             allProducts = data.products;
             loadProducts(currentPage);
@@ -28,8 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load products on the current page
     function loadProducts(page) {
+
         const start = (page - 1) * productsPerPage;
-        const productsToShow = searchInput.value ? filteredProducts.slice(start, start + productsPerPage) : allProducts.slice(start, start + productsPerPage);
+
+        let filtered = allProducts.filter(product => {
+            return product.price <= priceFilter.value && product.rating >= ratingFilter.value;
+        });
+
+        if (searchInput.value) {
+            const searchTerm = searchInput.value.toLowerCase();
+            filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm));
+        }
+ 
+
+
+        const productsToShow = filtered.slice(start, start + productsPerPage);
+      
         renderProducts(productsToShow);
         document.getElementById('page-number').innerText = page;
         toggleButtons(page);
@@ -39,8 +53,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderProducts(products) {
         productContainer.innerHTML = '';
         products.forEach(product => {
+            
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
+
             productCard.innerHTML = `
                 <button 
                     class="add-to-cart" 
@@ -50,9 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     data-image="${product.images[0]}">
                     Add to the cart
                 </button>
-                <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
+                ${showImages ? `<img src="${product.images[0]}" alt="${product.title}" loading="lazy">` : ''}
                 <h3>${product.title}</h3>
                 <p>${product.price} $</p>
+                <p>Rating: ${product.rating} ★</p>
             `;
             productContainer.appendChild(productCard);
         });
@@ -74,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Toggle visibility of pagination buttons
     function toggleButtons(page) {
+
         const previousButton = document.getElementById('previous');
         if (page === 1) {
             previousButton.style.display = 'none'; 
@@ -81,7 +99,18 @@ document.addEventListener('DOMContentLoaded', function() {
             previousButton.style.display = 'inline-block';
         }
 
-        const productsToShow = searchInput.value ? filteredProducts : allProducts;
+        let filtered = allProducts.filter(product => {
+            return product.price <= priceFilter.value && product.rating >= ratingFilter.value;
+        });
+    
+        if (searchInput.value) {
+            const searchTerm = searchInput.value.toLowerCase();
+            filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm));
+        }
+    
+        const productsToShow = filtered;
+
+
         if (page * productsPerPage < productsToShow.length) {
             document.getElementById('next').style.display = 'inline-block';
         } else {
@@ -199,9 +228,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Checkout functionality
     const checkoutBtn = document.querySelector('.checkout-btn');
     checkoutBtn.addEventListener('click', function() {
+        if (cart.length === 0) return;
         localStorage.setItem('cart', JSON.stringify(cart));
-        console.log('Pay button clicked');
         window.location.href = '/payment/';
+    });
+
+    // Filters functionality
+
+    const priceFilter = document.getElementById('price-filter');
+    const ratingFilter = document.getElementById('rating-filter');
+    const priceRange = document.getElementById('price-range');
+    const ratingRange = document.getElementById('rating-range');
+    const toggleImagesBtn = document.getElementById('toggle-images');
+
+    let showImages = true;
+
+    priceFilter.addEventListener('input', function() {
+        priceRange.innerText = `$${priceFilter.value}`;
+        loadProducts(currentPage); 
+    });
+
+    ratingFilter.addEventListener('input', function() {
+        ratingRange.innerText = `${ratingFilter.value} ★`;
+        loadProducts(currentPage);
+    });
+
+    toggleImagesBtn.addEventListener('click', function() {
+        showImages = !showImages;
+        loadProducts(currentPage); 
     });
 
 });

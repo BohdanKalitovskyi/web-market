@@ -24,6 +24,18 @@
 <div class="container">
     <aside class="sidebar">
         <h2>Filters</h2>
+        <div class="filters">
+            <div class="filter">
+                <label for="price-filter">Max Price: <span id="price-range">$2000</span></label>
+                <input type="range" id="price-filter" min="0" max="2000" step="2" value="1000">
+            </div>
+        
+            <div class="filter">
+                <label for="rating-filter">Min Rating: <span id="rating-range">0 ★</span></label>
+                <input type="range" id="rating-filter" min="0" max="5" step="0.1" value="0">
+            </div>
+        </div>
+        <button id="toggle-images">Toggle Images</button>
     </aside>
     <main class="products">
         <div class="product-grid">
