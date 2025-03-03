@@ -5,13 +5,13 @@
     padding: 0;
 }
 
-body{
+body {
     color: #555;
     background-color: lightpink;
     font-family: 'Poppins', sans-serif;
 }
 
-a{
+a {
     color: inherit;
     text-decoration: none;
 }
@@ -24,9 +24,12 @@ a{
     padding: 20px;
 }
 
-/* header */
+/* Header */
+header {
+    background-color: rgb(246, 127, 232);
+}
 
-.logo{
+.logo {
     padding: 40px;
     font-family: 'Poppins', sans-serif;
     font-weight: 1000;
@@ -45,9 +48,16 @@ a{
     font-family: 'Poppins', sans-serif;
 }
 
-.inputproduct::placeholder{
+.inputproduct::placeholder {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
+}
+
+.inputproduct:focus,
+.user-icon:focus,
+.user-cart:focus {
+    outline: 3px solid black;
+    transition: all 200ms ease;
 }
 
 .user-icon, .user-cart {
@@ -60,16 +70,14 @@ a{
     background-color: white;
 }
 
-
-.user-icon:hover, .user-cart:hover{
+.user-icon:hover,
+.user-cart:hover {
     transition: all 500ms ease;
     background-color: lightgray;
     border-color: black;
 }
 
-
-/* sidebar */
-
+/* Sidebar */
 .sidebar {
     width: 20%;
     background: #f4f4f4;
@@ -78,8 +86,7 @@ a{
     height: 50vh;
 }
 
-/* products part */
-
+/* Products Section */
 .products {
     width: 80%;
 }
@@ -97,15 +104,16 @@ a{
     background-color: #f9f9f9;
     margin: 10px 0;
 }
+
 .product-card img {
     width: 100%;
     height: auto;
 }
 
-.product-card:hover{
+.product-card:hover {
     background-color: #f1f1f1;
     transition: all 100ms ease;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.5)
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .add-to-cart {
@@ -125,7 +133,6 @@ a{
 }
 
 /* Pagination */
-
 .pagination {
     display: flex;
     justify-content: center;
@@ -148,12 +155,11 @@ a{
     transition: all 300ms ease;
 }
 
-.pagination .page-num{
+.pagination .page-num {
     padding-top: 5px;
 }
 
-/* cart */
-
+/* Cart */
 .user-cart {
     position: relative;
     cursor: pointer;
@@ -163,7 +169,7 @@ a{
     position: absolute;
     top: -5px;
     right: -10px;
-    background:rgb(247, 198, 255);
+    background: rgb(247, 198, 255);
     font-size: 14px;
     border-radius: 50%;
     padding: 3px 7px;
@@ -211,19 +217,20 @@ a{
     border-bottom: 1px solid #ddd;
 }
 
-.item-info{
+.item-info {
     align-items: start;
 }
 
-.close-cart{
-    height: 1.7vh;
-    width: auto;
+.close-cart {
+    height: 20px;
+    width: 15px;
     margin-top: 10px;
     border-radius: 10px;
     border: 1px solid white;
+    cursor: pointer;
 }
 
-.cart-total{
+.cart-total {
     margin-top: 8px;
 }
 
@@ -251,10 +258,7 @@ a{
     cursor: pointer;
 }
 
-.checkout-btn:hover{
-    transition: all 100ms ease ;
+.checkout-btn:hover {
+    transition: all 100ms ease;
     background-color: red;
 }
-
-
-

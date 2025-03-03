@@ -4,17 +4,16 @@
    Main page
 {% endblock %}
 
-
 {% block header %}
 <header class="container">
     <span class="logo">LOGO</span>
-    <input class="inputproduct" type="text" id="search" placeholder="Enter the product" value="" maxlenght="80">
-    <a href="{% url 'orders' %}">
-    <div class="user-icon">
-        <i class="fa-solid fa-user"></i>
-    </div>
+    <input class="inputproduct" type="text" id="search" placeholder="Enter the product" value="" maxlength="80">
+    <a href="{% url 'orders' %}" tabindex="-1">
+        <div class="user-icon" tabindex="0">
+            <i class="fa-solid fa-user"></i>
+        </div>
     </a>
-    <div class="user-cart">
+    <div class="user-cart" tabindex="0">
         <i class="fa-solid fa-cart-shopping"></i>
         <span class="cart-count">0</span>
     </div>
@@ -28,7 +27,7 @@
     </aside>
     <main class="products">
         <div class="product-grid">
-            
+            <!-- Products will be dynamically loaded here -->
         </div>
         <div class="pagination">
             <button class="prev" id="previous">← Previous</button>

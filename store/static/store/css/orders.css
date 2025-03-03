@@ -34,3 +34,19 @@ img {
     object-fit: cover;
     border-radius: 5px;
 }
+
+a.btn {
+    display: inline-block;
+    text-align: center;
+    background: #ff69b4;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 10px 10px;
+}
+  
+a.btn:hover {
+    background: rgb(151, 4, 151);
+} 

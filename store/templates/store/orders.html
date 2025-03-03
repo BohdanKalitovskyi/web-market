@@ -15,6 +15,7 @@
 
 {% block content %}
 <h1>Your Orders</h1>
+<a href="{% url 'home' %}" class="btn btn-primary">Cancel</a>
 <ul>
     {% for order in orders %}
         <li>
