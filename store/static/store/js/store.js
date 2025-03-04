@@ -1,3 +1,11 @@
+import { fetchAllProducts } from './modules_store/productFetch.js';
+import { loadProducts, renderProducts } from './modules_store/productDisplay.js';
+import { toggleButtons, addCartButtons } from './modules_store/uiControls.js';
+import { addToCart, removeFromCart, updateCartUI } from './modules_store/cart.js';
+import { setupCartSidebar } from './modules_store/cartSidebar.js';
+import { setupPagination } from './modules_store/pagination.js';
+import { setupFilters } from './modules_store/filters.js';
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const productContainer = document.querySelector('.product-grid');
@@ -14,252 +22,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let allProducts = [];
     let filteredProducts = [];
 
-    // Fetch all products from API
-    async function fetchAllProducts() {
-        try {
-            const response = await fetch('https://dummyjson.com/products?limit=200&select=id,title,price,images,rating');
-            const data = await response.json();
-            allProducts = data.products;
-            loadProducts(currentPage);
-        } catch (error) {
-            console.error('Error loading all products:', error);
-        }
-    }
+    fetchAllProducts(allProducts, loadProducts, currentPage);
 
-    // Load products on the current page
-    function loadProducts(page) {
-
-        const start = (page - 1) * productsPerPage;
-
-        let filtered = allProducts.filter(product => {
-            return product.price <= priceFilter.value && product.rating >= ratingFilter.value;
-        });
-
-        if (searchInput.value) {
-            const searchTerm = searchInput.value.toLowerCase();
-            filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm));
-        }
- 
-
-
-        const productsToShow = filtered.slice(start, start + productsPerPage);
-      
-        renderProducts(productsToShow);
-        document.getElementById('page-number').innerText = page;
-        toggleButtons(page);
-    }
-
-    // Render product cards
-    function renderProducts(products) {
-        productContainer.innerHTML = '';
-        products.forEach(product => {
-            
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-
-            productCard.innerHTML = `
-                <button 
-                    class="add-to-cart" 
-                    data-id="${product.id}" 
-                    data-title="${product.title}" 
-                    data-price="${product.price}" 
-                    data-image="${product.images[0]}">
-                    Add to the cart
-                </button>
-                ${showImages ? `<img src="${product.images[0]}" alt="${product.title}" loading="lazy">` : ''}
-                <h3>${product.title}</h3>
-                <p>${product.price} $</p>
-                <p>Rating: ${product.rating} ★</p>
-            `;
-            productContainer.appendChild(productCard);
-        });
-        addCartButtons();
-    }
-
-    // Filter products on search input
     searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase();
         if (searchTerm === '') {
             filteredProducts = [];
-            loadProducts(currentPage);
+            loadProducts(currentPage, allProducts, searchInput, productContainer);
         } else {
             filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(searchTerm));
             currentPage = 1;
-            loadProducts(currentPage);
+            loadProducts(currentPage, allProducts, searchInput, productContainer);
         }
     });
 
-    // Toggle visibility of pagination buttons
-    function toggleButtons(page) {
+    setupCartSidebar(cartIcon, cart, updateCartUI);
+    setupPagination(currentPage, loadProducts);
+    setupFilters(currentPage, loadProducts);
 
-        const previousButton = document.getElementById('previous');
-        if (page === 1) {
-            previousButton.style.display = 'none'; 
-        } else {
-            previousButton.style.display = 'inline-block';
-        }
-
-        let filtered = allProducts.filter(product => {
-            return product.price <= priceFilter.value && product.rating >= ratingFilter.value;
-        });
-    
-        if (searchInput.value) {
-            const searchTerm = searchInput.value.toLowerCase();
-            filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm));
-        }
-    
-        const productsToShow = filtered;
-
-
-        if (page * productsPerPage < productsToShow.length) {
-            document.getElementById('next').style.display = 'inline-block';
-        } else {
-            document.getElementById('next').style.display = 'none';
-        }
-    }
-
-    fetchAllProducts();
-
-    // Cart functionality
-
-    // Add item to cart
-    function addToCart(id, title, price, image) {
-        const existingItem = cart.find(item => item.id === id);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({ id, title, price, image, quantity: 1 });
-        }
-        updateCartUI();
-    }
-
-    // Remove item from cart
-    function removeFromCart(id) {
-        cart = cart.filter(item => item.id !== id);
-        updateCartUI();
-    }
-
-    // Update cart UI
-    function updateCartUI() {
-        cartCount.innerText = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.style.display = cart.length > 0 ? 'block' : 'none';
-
-        cartItemsContainer.innerHTML = cart.length === 0 ? '<p>Cart is empty</p>' : '';
-
-        const cartTotal = document.querySelector('.cart-total');
-        const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        cartTotal.innerText = `Total: $${totalAmount.toFixed(2)}`;
-
-        cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title}">
-                <div>
-                    <p>${item.title}</p>
-                    <p>${item.price} $</p>
-                    <p>Quantity: ${item.quantity}</p>
-                </div>
-                <button class="remove-item" data-id="${item.id}">×</button>
-            `;
-            cartItemsContainer.appendChild(cartItem);
-        });
-
-        document.querySelectorAll('.remove-item').forEach(button => {
-            button.addEventListener('click', function() {
-                removeFromCart(this.dataset.id);
-            });
-        });
-    }
-
-    // Add event listeners to add-to-cart buttons
-    function addCartButtons() {
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const title = this.dataset.title;
-                const price = this.dataset.price;
-                const image = this.dataset.image;
-                addToCart(id, title, price, image);
-            });
-        });
-    }
-
-    // Cart sidebar
-    const cartSidebar = document.createElement('div');
-    cartSidebar.classList.add('cart-sidebar');
-    cartSidebar.innerHTML = `
-    <div class="cart-header">
-        <h2>The cart</h2>
-        <span class="cart-total">Total: $0</span> 
-        <button class="close-cart">&times;</button>
-    </div>
-    <div class="cart-items"></div>
-    <button class="checkout-btn">Pay</button>
-    `;
-    document.body.appendChild(cartSidebar);
-
-    const closeCartBtn = cartSidebar.querySelector('.close-cart');
-    const cartItemsContainer = cartSidebar.querySelector('.cart-items');
-
-    cartIcon.addEventListener('click', function() {
-        cartSidebar.classList.toggle('active');
-    });
-
-    closeCartBtn.addEventListener('click', function() {
-        cartSidebar.classList.remove('active');
-    });
-
-    // Pagination Controls
-    loadProducts(currentPage);
-
-    document.getElementById('previous').addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            loadProducts(currentPage);
-        }
-    });
-
-    document.getElementById('next').addEventListener('click', function() {
-        currentPage++;
-        loadProducts(currentPage);
-    });
-
-    // Checkout functionality
-    const checkoutBtn = document.querySelector('.checkout-btn');
-    checkoutBtn.addEventListener('click', function() {
-        if (cart.length === 0) return;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        window.location.href = '/payment/';
-    });
-
-    // Filters functionality
-
-    const priceFilter = document.getElementById('price-filter');
-    const ratingFilter = document.getElementById('rating-filter');
-    const priceRange = document.getElementById('price-range');
-    const ratingRange = document.getElementById('rating-range');
-    const toggleImagesBtn = document.getElementById('toggle-images');
-
-    let showImages = true;
-
-    priceFilter.addEventListener('input', function() {
-        priceRange.innerText = `$${priceFilter.value}`;
-        loadProducts(currentPage); 
-    });
-
-    ratingFilter.addEventListener('input', function() {
-        ratingRange.innerText = `${ratingFilter.value} ★`;
-        loadProducts(currentPage);
-    });
-
-    toggleImagesBtn.addEventListener('click', function() {
-        showImages = !showImages;
-        loadProducts(currentPage); 
-    });
-
+    window.globalState = { currentPage, productsPerPage, cart, allProducts, filteredProducts, productContainer, searchInput, cartCount };
+    window.globalFunctions = { loadProducts, renderProducts, toggleButtons, addCartButtons, addToCart, removeFromCart, updateCartUI };
 });
-
-
-
-

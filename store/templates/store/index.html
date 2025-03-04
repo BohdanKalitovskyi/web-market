@@ -1,5 +1,7 @@
 {% extends 'store/layout.html' %}
 
+{% load static %}
+
 {% block title %}
    Main page
 {% endblock %}
@@ -48,4 +50,9 @@
         </div>
     </main>
 </div>
+{% endblock %}
+
+
+{% block js %}
+    <script type="module" src="{% static 'store/js/store.js' %}" defer></script>
 {% endblock %}
