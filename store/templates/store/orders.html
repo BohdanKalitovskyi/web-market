@@ -6,16 +6,19 @@
 {% endblock %}
 
 
-{% block header %}
-{% endblock %}
+
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'store/css/orders.css' %}">
 {% endblock %}
 
+{% block header %}
+<h1>Your Orders</h1>
+{% endblock %}
+
 {% block content %}
 
-<h1>Your Orders</h1>
+
 
 <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
 <ul>

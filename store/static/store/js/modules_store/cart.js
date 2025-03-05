@@ -7,11 +7,15 @@ export function addToCart(id, title, price, image) {
         cart.push({ id, title, price, image, quantity: 1 });
     }
     window.globalFunctions.updateCartUI();
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('Cart after add:', cart);
 }
 
 export function removeFromCart(id) {
     window.globalState.cart = window.globalState.cart.filter(item => item.id !== id);
     window.globalFunctions.updateCartUI();
+    localStorage.setItem('cart', JSON.stringify(window.globalState.cart));
+    console.log('Cart after remove:', window.globalState.cart);
 }
 
 export function updateCartUI() {

@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="{% static 'store/css/payment.css' %}">
 {% endblock %}
 
+{% block header %}
+<h1>Order</h1>
+{% endblock %}
 
 {% block content %}
-  <h1>Order</h1>
-  <a href="{% url 'home' %}" class="btn btn-primary">Cancel</a>
+  <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
   <form id="order-form" method="post">
     {% csrf_token %}
     <label for="name">First Name:</label>

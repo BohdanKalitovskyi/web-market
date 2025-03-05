@@ -25,7 +25,7 @@ export function setupCartSidebar(cartIcon, cart, updateCartUI) {
     const checkoutBtn = document.querySelector('.checkout-btn');
     checkoutBtn.addEventListener('click', function() {
         if (cart.length === 0) return;
-        localStorage.setItem('cart', JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(window.globalState.cart));
         window.location.href = '/payment/';
     });
 }

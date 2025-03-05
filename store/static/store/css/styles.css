@@ -7,8 +7,10 @@
 
 
 body {
-    color: #555;
-    background-color: lightpink;
+    color: #333;
+    background: linear-gradient(135deg, #f8bbd0, #ea7199, #f2578b);
+    background-size: 200% 200%;
+    animation: gradientShift 30s ease infinite;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -27,31 +29,44 @@ a {
 
 /* Header */
 header{
-    background-color: rgb(246, 127, 232);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: rgba(246, 127, 232);
 }
 
 .logo {
-    padding: 40px;
+    padding: 5px;
     font-family: 'Poppins', sans-serif;
     font-weight: 1000;
-    font-size: 50px;
+    font-size: clamp(18px, 4vw, 40px);
+    flex-shrink: 0;
 }
 
 .inputproduct {
-    height: 40px;
-    width: 70%;
-    margin-top: 60px;
-    margin-right: 50px;
+    height: 30px;
+    width: 60%;
+    margin: 0 5px;
     background-color: white;
-    outline: 3px solid pink;
+    outline: 3px solid #f06292;
     border: 1px solid #ccc;
-    font-size: 20px;
-    font-family: 'Poppins', sans-serif;
+    font-size: clamp(12px, 2vw, 16px);
+    flex-grow: 1;
 }
 
 .inputproduct::placeholder {
-    font-size: 15px;
-    font-family: 'Poppins', sans-serif;
+    font-size: clamp(10px, 1.5vw, 14px);
 }
 
 .inputproduct:focus,
@@ -62,13 +77,17 @@ header{
 }
 
 .user-icon, .user-cart {
-    padding: 30px;
-    margin: 5px;
-    margin-top: 35px;
+    padding: 5px;
+    margin: 0 5px;
     border: 3px solid pink;
     border-radius: 10px;
-    height: 25px;
+    height: 30px;
+    width: 30px;
     background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .user-icon:hover,
@@ -80,12 +99,16 @@ header{
 
 /* Sidebar */
 .sidebar {
-    margin-top: 9px;
-    width: 20%;
+    margin-top: 70px;
+    width: clamp(150px, 20%, 300px);
     background: #f4f4f4;
     padding: 15px;
     border-radius: 8px;
     height: 40vh;
+    position: sticky;
+    top: 60px;
+    z-index: 900;
+    box-sizing: border-box;
 }
 
 /* Filters Section */
@@ -93,7 +116,7 @@ header{
 .filters {
     background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
@@ -135,21 +158,30 @@ header{
 
 /* Products Section */
 .products {
-    width: 80%;
+    width: calc(80% - 10px);
+    margin-left: auto;
+    margin-top: 60px;
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    max-width: 100%;
 }
 
 .product-card {
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 10px;
     text-align: center;
-    background-color: #f9f9f9;
     margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: calc(var(--order) * 0.1s);
+    border: 1px solid #f06292;
+    background: linear-gradient(135deg, #fff, #fce4ec);
 }
 
 .product-card img {
@@ -160,7 +192,7 @@ header{
 .product-card:hover {
     background-color: #f1f1f1;
     transition: all 100ms ease;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .add-to-cart {
@@ -185,26 +217,29 @@ header{
     justify-content: center;
     margin-top: 20px;
     gap: 10px;
-    margin-left: 50%;
+    margin-left: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .pagination button {
     padding: 10px 15px;
     border: none;
-    background: #ff69b4;
-    color: white;
+    background: #cf1e76;
     cursor: pointer;
     border-radius: 5px;
     width: 110px;
+    color: #fff;
 }
 
 .pagination button:hover {
     background: rgb(151, 4, 151);
-    transition: all 300ms ease;
+    animation: pulse 0.8s infinite;
 }
 
 .pagination .page-num {
     padding-top: 5px;
+    font-size: clamp(12px, 2vw, 16px);
 }
 
 /* Cart */
@@ -215,13 +250,20 @@ header{
 
 .cart-count {
     position: absolute;
-    top: -5px;
-    right: -10px;
+    top: -6px;
+    right: -12px;
     background: rgb(247, 198, 255);
-    font-size: 14px;
+    font-size: clamp(8px, 1.2vw, 14px);
     border-radius: 50%;
-    padding: 3px 7px;
+    padding: clamp(2px, 0.5vw, 5px) clamp(4px, 1vw, 7px);
     display: none;
+    z-index: 1200; 
+    color: #333; 
+    min-width: 14px; 
+    height: 14px; 
+    line-height: 14px; 
+    text-align: center;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .cart-sidebar {
@@ -232,28 +274,31 @@ header{
     height: 100%;
     background: white;
     box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease;
+    transition: right 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
     display: flex;
     flex-direction: column;
     color: #555;
+    z-index: 1050;
 }
 
 .cart-sidebar.active {
     right: 0;
+    opacity: 1;
 }
 
 .cart-header {
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: clamp(5px, 1vw, 10px) clamp(10px, 2vw, 15px);
     background: #ff69b4;
-    font-size: 18px;
+    font-size: clamp(12px, 1.8vw, 16px);
     color: #fff;
 }
 
 .cart-items {
     flex-grow: 1;
-    padding: 15px;
+    padding: clamp(5px, 1vw, 10px);
     overflow-y: auto;
 }
 
@@ -261,8 +306,9 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: clamp(5px, 1vw, 8px);
     border-bottom: 1px solid #ddd;
+    gap: 10px;
 }
 
 .item-info {
@@ -270,45 +316,61 @@ header{
 }
 
 .close-cart {
-    height: 40px;
-    width: 30px;
-    margin-top: 10px;
+    height: clamp(20px, 3vw, 30px);
+    width: clamp(20px, 3vw, 30px);
+    margin-top: clamp(5px, 1vw, 10px);
     border-radius: 10px;
     border: 1px solid white;
     cursor: pointer;
+    font-size: clamp(10px, 1.5vw, 14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cart-total {
     margin-top: 8px;
+    font-size: clamp(12px, 1.5vw, 16px);
 }
 
 .cart-item img {
-    width: 50px;
-    height: 50px;
+    width: clamp(30px, 5vw, 50px);
+    height: clamp(30px, 5vw, 50px);
+    object-fit: contain;
+}
+
+.cart-item div {
+    flex-grow: 1;
+}
+
+.cart-item p {
+    font-size: clamp(10px, 1.2vw, 14px);
+    margin: 2px 0;
 }
 
 .remove-item {
     background: red;
     color: white;
     border: none;
-    padding: 5px;
+    padding: clamp(3px, 0.5vw, 5px);
     cursor: pointer;
     border-radius: 8px;
+    font-size: clamp(8px, 1.2vw, 12px);
 }
 
 .checkout-btn {
     width: 100%;
-    padding: 15px;
-    background: lightcoral;
+    padding: clamp(8px, 1.5vw, 15px);
+    background: linear-gradient(135deg, lightcoral, #ff4040);
     color: white;
-    font-size: 18px;
+    font-size: clamp(12px, 1.8vw, 16px);
     border: none;
     cursor: pointer;
 }
 
 .checkout-btn:hover {
     transition: all 100ms ease;
-    background-color: red;
+    background: linear-gradient(135deg, #ff4040, red);
 }
 
 /* Footer */
@@ -319,4 +381,155 @@ footer{
     padding-top: 2.5vh;
 }
 
+/* Animations */
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* Responsiveness */
+
+@media (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .products {
+        width: calc(75% - 10px);
+    }
+    .sidebar {
+        width: clamp(150px, 25%, 250px);
+        height: 360px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        height: 40px;
+        padding: 5px;
+    }
+    .logo {
+        font-size: 18px;
+        padding: 2px;
+    }
+    .inputproduct {
+        width: 50%;
+        height: 25px;
+        margin: 0 3px;
+        font-size: 14px;
+    }
+    .inputproduct::placeholder {
+        font-size: 12px;
+    }
+    .user-icon, .user-cart {
+        height: 25px;
+        width: 25px;
+        padding: 3px;
+        margin: 0 3px;
+    }
+    .products {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 50px;
+    }
+    .sidebar {
+        width: clamp(120px, 40%, 200px);
+        height: auto;
+        margin-top: 60px;
+        position: static;
+        top: auto;
+    }
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 5px;
+    }
+    .cart-item img {
+        margin-bottom: 5px;
+    }
+    .cart-sidebar {
+        width: 50%;
+        right: -50%;
+    }
+    .pagination {
+        justify-content: flex-start;
+        padding: 0 20px;
+    }
+    .pagination button {
+        width: 90px;
+        padding: 8px 10px;
+        font-size: clamp(10px, 1.5vw, 14px); 
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        height: 35px; 
+        padding: 3px;
+        gap: 3px;
+    }
+    .logo {
+        font-size: 16px;
+        padding: 1px;
+    }
+    .inputproduct {
+        width: 45%;
+        height: 20px;
+        font-size: 12px;
+        margin: 0 2px;
+    }
+    .inputproduct::placeholder {
+        font-size: 10px;
+    }
+    .user-icon, .user-cart {
+        height: 20px;
+        width: 20px;
+        padding: 2px;
+        margin: 0 2px;
+    }
+    .products {
+        margin-top: 45px;
+    }
+    .sidebar {
+        width: 100%;
+        margin-top: 55px;
+        position: static;
+    }
+    .product-grid {
+        grid-template-columns: 1fr; 
+    }
+    .cart-header {
+        padding: 5px 10px;
+    }
+    .cart-items {
+        padding: 5px;
+    }
+    .cart-sidebar {
+        width: 70%;
+        right: -70%;
+    }
+    .pagination {
+        padding: 0 15px;
+        gap: 5px;
+    }
+    .pagination button {
+        width: 70px;
+        padding: 6px 8px;
+        font-size: clamp(8px, 1.5vw, 12px);
+    }
+}
 

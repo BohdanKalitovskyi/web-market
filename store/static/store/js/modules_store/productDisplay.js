@@ -20,10 +20,10 @@ export function loadProducts(page, allProducts = window.globalState.allProducts,
 
 export function renderProducts(products, productContainer) {
     productContainer.innerHTML = '';
-    products.forEach(product => {
+    products.forEach((product,index) => {
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
-
+        productCard.style.setProperty('--order', index);
         productCard.innerHTML = `
             <button 
                 class="add-to-cart" 
