@@ -1,42 +1,59 @@
-
+/* Header Panel */
 
 h1 {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 5px 10px;
   text-align: center;
-  font-size: 36px;
+  font-size: clamp(18px, 4vw, 36px);
   color: #333;
-  margin-bottom: 20px;
-  background-color: rgb(246, 127, 232);
+  margin: 0; 
+  background-color: rgb(246, 127, 232); 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px; 
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 a.btn {
   display: inline-block;
   text-align: center;
-  background: #ff69b4;
+  background: #d82e83;
   color: white;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: clamp(5px, 1vw, 10px) clamp(10px, 2vw, 20px);
+  font-size: clamp(12px, 1.5vw, 16px);
   border-radius: 5px;
   text-decoration: none;
-  margin: 10px 10px;
+  position: absolute;
+  left: 10px;
+  top: 50%; 
+  transform: translateY(-50%);
 }
 
 a.btn:hover {
   background: rgb(151, 4, 151);
+  transition: all 200ms ease;
 }
+
+/* Form */
 
 form {
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: clamp(10px, 2vw, 20px);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  margin: 0 auto;
+  width: clamp(300px, 80%, 800px);
+  margin: 60px auto 20px;
+  box-sizing: border-box;
 }
 
 form label {
-  font-size: 16px;
+  font-size: clamp(12px, 1.5vw, 16px);
   color: #555;
   margin-bottom: 8px;
   display: block;
@@ -44,12 +61,13 @@ form label {
 
 form input {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0 20px 0;
+  padding: clamp(8px, 1vw, 10px);
+  margin: clamp(5px, 1vw, 10px) 0 clamp(10px, 2vw, 20px);
   border-radius: 5px;
   border: 1px solid #ddd;
-  font-size: 14px;
+  font-size: clamp(12px, 1.5vw, 14px);
   color: #333;
+  box-sizing: border-box;
 }
 
 form input:focus {
@@ -58,8 +76,8 @@ form input:focus {
 }
 
 h3 {
-  margin-top: 30px;
-  font-size: 24px;
+  margin-top: clamp(20px, 3vw, 30px);
+  font-size: clamp(16px, 2vw, 24px);
   color: #333;
 }
 
@@ -70,10 +88,15 @@ ul#cart-items {
 
 ul#cart-items li {
   background-color: #f9f9f9;
-  padding: 15px;
-  margin: 10px 0;
+  padding: clamp(10px, 1.5vw, 15px);
+  margin: clamp(5px, 1vw, 10px) 0;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 ul#cart-items li:hover {
@@ -81,28 +104,28 @@ ul#cart-items li:hover {
 }
 
 ul#cart-items li img {
-  max-width: 80px;
-  max-height: 80px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 15px;
+max-width: clamp(50px, 10vw, 80px);
+    max-height: clamp(50px, 10vw, 80px);
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: clamp(5px, 1vw, 15px);
 }
 
 p {
-  font-size: 18px;
+  font-size: clamp(14px, 1.8vw, 18px);
   color: #555;
-  margin-top: 20px;
+  margin-top: clamp(10px, 2vw, 20px);
 }
 
 button {
   background-color: lightcoral;
   color: white;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2vw, 20px);
+  font-size: clamp(12px, 1.5vw, 16px);
   border-radius: 5px;
   border: none;
   width: 100%;
-  margin-top: 20px;
+  margin-top: clamp(10px, 2vw, 20px);
   cursor: pointer;
 }
 
@@ -111,3 +134,45 @@ button:hover {
   background-color: red;
 }
 
+/* Responsiveness */
+
+@media (max-width: 768px) {
+  h1 {
+      height: 40px;
+      font-size: clamp(16px, 3vw, 24px);
+  }
+  a.btn {
+      padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 15px);
+      font-size: clamp(10px, 1.5vw, 14px);
+      left: 5px; 
+  }
+  form {
+      width: clamp(250px, 90%, 600px);
+      margin-top: 50px; 
+  }
+  ul#cart-items li {
+      flex-direction: column;
+      text-align: center;
+  }
+  ul#cart-items li img {
+      margin-right: 0;
+      margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+      height: 35px; 
+      font-size: clamp(14px, 3vw, 20px);
+  }
+  a.btn {
+      padding: clamp(3px, 1vw, 6px) clamp(6px, 2vw, 12px);
+      font-size: clamp(8px, 1.5vw, 12px);
+      left: 5px;
+  }
+  form {
+      width: 90%;
+      margin-top: 45px;
+      padding: 10px;
+  }
+}

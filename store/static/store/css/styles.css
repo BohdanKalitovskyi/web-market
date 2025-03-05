@@ -5,12 +5,18 @@
     padding: 0;
 }
 
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 
 body {
     color: #333;
-    background: linear-gradient(135deg, #f8bbd0, #ea7199, #f2578b);
-    background-size: 200% 200%;
-    animation: gradientShift 30s ease infinite;
+    background: #f8bbd0;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -104,11 +110,13 @@ header{
     background: #f4f4f4;
     padding: 15px;
     border-radius: 8px;
-    height: 40vh;
-    position: sticky;
+    height: auto;
+    max-height: 45vh;
+    position:sticky;
     top: 60px;
     z-index: 900;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* Filters Section */
@@ -179,7 +187,7 @@ header{
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.5s ease forwards;
-    animation-delay: calc(var(--order) * 0.1s);
+    animation-delay: calc(var(--order) * 0.03s);
     border: 1px solid #f06292;
     background: linear-gradient(135deg, #fff, #fce4ec);
 }
@@ -393,11 +401,6 @@ footer{
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes gradientShift {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
 
 /* Responsiveness */
 
@@ -415,6 +418,9 @@ footer{
 }
 
 @media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
     header {
         height: 40px;
         padding: 5px;
@@ -441,14 +447,14 @@ footer{
     .products {
         width: 100%;
         margin-left: 0;
-        margin-top: 50px;
+        margin-top: 0;
     }
     .sidebar {
-        width: clamp(120px, 40%, 200px);
-        height: auto;
-        margin-top: 60px;
+        width: 100%; 
+        margin-top: 50px;
+        top: 50px;
+        max-height: 30vh;
         position: static;
-        top: auto;
     }
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -466,7 +472,7 @@ footer{
         right: -50%;
     }
     .pagination {
-        justify-content: flex-start;
+        justify-content: center;
         padding: 0 20px;
     }
     .pagination button {
@@ -502,11 +508,15 @@ footer{
         margin: 0 2px;
     }
     .products {
-        margin-top: 45px;
+        width: 100%;
     }
     .sidebar {
         width: 100%;
-        margin-top: 55px;
+        margin-top: 45px;
+        top: 45px;
+        max-height: none; 
+        height: auto; 
+        overflow-y: visible;
         position: static;
     }
     .product-grid {
@@ -525,6 +535,7 @@ footer{
     .pagination {
         padding: 0 15px;
         gap: 5px;
+        justify-content: center;
     }
     .pagination button {
         width: 70px;

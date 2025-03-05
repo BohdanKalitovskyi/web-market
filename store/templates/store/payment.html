@@ -6,11 +6,15 @@
 {% endblock %}
 
 {% block header %}
-<h1>Order</h1>
+<h1>
+  Order
+  <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+</h1>
+
 {% endblock %}
 
 {% block content %}
-  <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+
   <form id="order-form" method="post">
     {% csrf_token %}
     <label for="name">First Name:</label>
