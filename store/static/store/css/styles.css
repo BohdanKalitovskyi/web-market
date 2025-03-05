@@ -111,7 +111,7 @@ header{
     padding: 15px;
     border-radius: 8px;
     height: auto;
-    max-height: 45vh;
+    max-height: 40vh;
     position:sticky;
     top: 60px;
     z-index: 900;
@@ -413,7 +413,8 @@ footer{
     }
     .sidebar {
         width: clamp(150px, 25%, 250px);
-        height: 360px;
+        height: auto; 
+        overflow-y: visible;
     }
 }
 
@@ -453,8 +454,9 @@ footer{
         width: 100%; 
         margin-top: 50px;
         top: 50px;
-        max-height: 30vh;
         position: static;
+        height: auto; 
+        overflow-y: visible;
     }
     .product-grid {
         grid-template-columns: repeat(2, 1fr);

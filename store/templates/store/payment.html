@@ -28,10 +28,19 @@
     
     <label for="phone">Phone:</label>
     <input type="tel" id="phone" name="phone" pattern="\+?\d{9,15}" required>
-    
+
     <label for="card-number">Card Number:</label>
     <input type="tel" id="card-number" name="card-number" pattern="\d{4} \d{4} \d{4} \d{4}" maxlength="19" required>
-
+    <div class="card-exp-cvv">
+      <div class="card-field">
+        <label for="expiration-date">Expiration Date (MM/YY):</label>
+        <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY" required>
+      </div>
+      <div class="card-field">
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" maxlength="3" required>
+      </div>
+    </div>
     <h3>Your order:</h3>
     <ul id="cart-items"></ul>
     <p><strong>Sum: </strong><span id="total-price">0</span> $</p>

@@ -70,6 +70,24 @@ form input {
   box-sizing: border-box;
 }
 
+.card-exp-cvv {
+  display: flex;
+  gap: 10px;
+  margin: clamp(5px, 1vw, 10px) 0 clamp(10px, 2vw, 20px);
+}
+
+.card-field {
+  flex: 1;
+}
+
+.card-field input#expiration-date {
+  width: 100%;
+}
+
+.card-field input#cvv {
+  width: 100%;
+}
+
 form input:focus {
   border-color: #007bff;
   outline: none;
@@ -174,5 +192,13 @@ button:hover {
       width: 90%;
       margin-top: 45px;
       padding: 10px;
+  }
+  .card-exp-cvv {
+    flex-direction: column; 
+    gap: 5px;
+  }
+  .card-field input#expiration-date,
+  .card-field input#cvv {
+    width: 100%; 
   }
 }

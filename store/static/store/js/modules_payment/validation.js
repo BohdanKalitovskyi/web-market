@@ -33,5 +33,19 @@ export function validateForm() {
         return false;
     }
 
+    const [month, year] = expirationDate.split('/');
+    const currentYear = new Date().getFullYear() % 100; 
+    const currentMonth = new Date().getMonth() + 1; 
+    if (parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
+        alert('Card has expired');
+        return;
+    }
+    
+    if (!/^\d{3}$/.test(cvv)) {
+        alert('CVV must be 3 digits');
+        return;
+    }
+    
+
     return true;
 }
