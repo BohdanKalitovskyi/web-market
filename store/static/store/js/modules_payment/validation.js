@@ -4,6 +4,8 @@ export function validateForm() {
     const address = document.getElementById('address').value;
     const phone = document.getElementById('phone').value;
     const cardNumber = document.getElementById('card-number').value;
+    const expirationDate = document.getElementById('expiration-date').value;
+    const cvv = document.getElementById('cvv').value;
 
     if (name.trim() === '') {
         alert('Please enter your name.');
@@ -40,7 +42,7 @@ export function validateForm() {
         alert('Card has expired');
         return;
     }
-    
+
     if (!/^\d{3}$/.test(cvv)) {
         alert('CVV must be 3 digits');
         return;
