@@ -17,17 +17,17 @@
 
   <form id="order-form" method="post">
     {% csrf_token %}
-    <label for="name">First Name:</label>
-    <input type="text" id="name" name="name" required>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" autocomplete="given-name" required>
     
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email" autocomplete="email" required>
     
     <label for="address">Address:</label>
-    <input type="text" id="address" name="address" required>
+    <input type="text" id="address" name="address" autocomplete="street-address" required>
     
     <label for="phone">Phone:</label>
-    <input type="tel" id="phone" name="phone" pattern="\+?\d{9,15}" required>
+    <input type="tel" id="phone" name="phone" pattern="\+?\d{9,15}" autocomplete="tel" required>
 
     <label for="card-number">Card Number:</label>
     <input type="tel" id="card-number" name="card-number" pattern="\d{4} \d{4} \d{4} \d{4}" maxlength="19" required>

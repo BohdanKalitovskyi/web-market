@@ -8,7 +8,10 @@ export function loadProducts(page, allProducts = window.globalState.allProducts,
 
     if (searchInput.value) {
         const searchTerm = searchInput.value.toLowerCase();
-        filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm));
+        filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm)
+            || product.category.toLowerCase().includes(searchTerm)
+            || product.tags.some(cat => cat.toLowerCase().includes(searchTerm))
+    );
     }
 
     const productsToShow = filtered.slice(start, start + productsPerPage);
