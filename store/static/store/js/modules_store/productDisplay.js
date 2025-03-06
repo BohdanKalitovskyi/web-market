@@ -28,12 +28,7 @@ export function renderProducts(products, productContainer) {
         productCard.classList.add('product-card');
         productCard.style.setProperty('--order', index);
         productCard.innerHTML = `
-            <button 
-                class="add-to-cart" 
-                data-id="${product.id}" 
-                data-title="${product.title}" 
-                data-price="${product.price}" 
-                data-image="${product.images[0]}">
+            <button class="add-to-cart"> 
                 Add to the cart
             </button>
             ${window.showImages ? `<img src="${product.images[0]}" alt="${product.title}" loading="lazy">` : ''}
