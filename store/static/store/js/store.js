@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsPerPage = 24;
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let allProducts = [];
-    let filteredProducts = [];
 
 
     window.addEventListener('pageshow', function(event) {
@@ -37,22 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchAllProducts(allProducts, loadProducts, currentPage);
 
     searchInput.addEventListener('input', function() {
-        const searchTerm = searchInput.value.toLowerCase();
-        if (searchTerm === '') {
-            filteredProducts = [];
-            loadProducts(currentPage, allProducts, searchInput, productContainer);
-        } else {
-            filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(searchTerm));
-            currentPage = 1;
-            loadProducts(currentPage, allProducts, searchInput, productContainer);
-        }
+    loadProducts(currentPage, allProducts, searchInput, productContainer);
     });
 
     setupCartSidebar(cartIcon, cart, updateCartUI);
     setupPagination(currentPage, loadProducts);
     setupFilters(currentPage, loadProducts);
 
-    window.globalState = { currentPage, productsPerPage, cart, allProducts, filteredProducts, productContainer, searchInput, cartCount };
+    window.globalState = { currentPage, productsPerPage, cart, allProducts, productContainer, searchInput, cartCount };
     window.globalFunctions = { loadProducts, renderProducts, toggleButtons, addCartButtons, addToCart, removeFromCart, updateCartUI };
 
     updateCartUI();
